@@ -1,0 +1,14 @@
+Package: semTools
+Type: Package
+Title: Miscellaneous stuffs for structural equation modeling.
+Version: 0.0-2
+Date: 2012-03-15
+Author: Sunthud Pornprasertmanit <psunthud@ku.edu>, Patrick Miller
+        <patr1ckm@ku.edu>, Alex Schoemann <schoemann@ku.edu>, Yves Rosseel <Yves.Rosseel@UGent.be>
+Maintainer: Sunthud Pornprasertmanit <psunthud@ku.edu>, Patrick Miller
+        <patr1ckm@ku.edu>, Alex Schoemann <schoemann@ku.edu>
+Depends: R(>= 2.14), lavaan, methods
+Suggests: parallel, Amelia
+Description: This package provide useful tools for structural equation modeling analysis. 
+License: GPL (>= 2)
+LazyLoad: yes
