@@ -7,15 +7,21 @@
 ##Currently outputs a list of parameter estimates, standard errors, fit indices and fraction missing information
 
 
-runMI<- function(data.mat,data.model, m, miPackage="amelia", digits=3, ...) {
+runMI<- function(data.mat,data.model, m, miPackage="Amelia", digits=3, ...) {
 
 	
   #Currently only supports imputation by Amelia. We want to add mice, and maybe EM imputatin too...
-  if(!miPackage=="amelia") stop("Currently runMI only supports imputation by amelia")
+  if(!miPackage=="Amelia" || !miPackage=="mice") stop("Currently runMI only supports imputation by Amelia or mice")
   args <- list(...)
  
   #Impute missing data
-  imputed.l<-imputeMissing(data.mat,m, ...)
+  if(miPackage=="Amelia"){
+  imputed.l<-imputeMissingAmelia(data.mat,m, ...)
+  }
+  
+  if(miPackage=="mice"){
+  imputed.l<-imputeMissingMice(data.mat,m, ...)
+  }
 
   
  	#Run imputed data
@@ -96,13 +102,25 @@ runMI(test,HS.model,3, idvars='id')
 
 
 #Conveniance function to run impuations on data and only return list of data
-imputeMissing <- function(data.mat,m, ...){
+imputeMissingAmelia <- function(data.mat,m, ...){
   # pull out only the imputations
   require(Amelia)
   temp.am <- amelia(data.mat,m, p2s=0, ...)
   return(temp.am$imputations)
 
-} # end imputeMissing
+} # end imputeMissingAmelia
+
+imputeMissingMice <- function(data.mat,m, ...){
+  # pull out only the imputations
+  require(mice)
+  temp.mice <- mice(data.mat,m, diagnostics=FALSE, printFlag=FALSE, ...)
+  temp.mice.imp <- NULL
+  for (i in 1:m) {
+  temp.mice.imp[[i]] <- complete(temp.mice, action=i)
+  }  
+  return(temp.mice.imp)
+
+} # end imputeMissingAmelia
 
 #Conveniance function to run lavaan models and get results out. For easy use with lapply
     runlavaanMI <- function(MIdata,syntax) {

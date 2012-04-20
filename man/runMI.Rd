@@ -20,7 +20,7 @@ lavaan syntax for the the model to be analyzed.
 Number of imputations wanted.
 }
  \item{miPackage}{
-Package to be used for impuation. Currently runMI only uses Amelia for imputation
+Package to be used for imputation. Currently runMI only uses Amelia or mice for imputation.
 }
  \item{digits}{
 	Number of digits to print in the results.
